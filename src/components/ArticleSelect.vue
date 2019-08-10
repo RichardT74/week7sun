@@ -1,20 +1,28 @@
 <template lang="html">
 <select @change = "selectedArticle">
+<option selected disabled></option>
 
-  <!-- <ul>
-<list-component  v-for="(article, index) in articles" :article="article" :key="index"></list-component>
-    </ul> -->
-	</select>
+<option v-for="(article, index) in articles"
+:value="index"> {{article.webTitle}} </option>
+
+</select>
 </template>
 
 <script>
-import eventBus from '@/main.js'
+
+
+import { eventBus } from '@/main.js'
 
 
 export default {
   name: 'article-select',
   props: ['articles'],
-
+	methods: {
+		selectedArticle(event) {
+			const selectedIndex = event.target.value;
+			eventBus.$emit('article-selected', selectedIndex);
+		}
+	}
   }
 </script>
 <style>
