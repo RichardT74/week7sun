@@ -1,22 +1,37 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+
+
+    <div class="main-container">
+
+  <h1>Guardian Articles</h1>
+
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import { eventBus } from '@/main.js'
+import ArticleSelect from '@/components/ArticleSelect.vue'
+
 
 export default {
-  name: 'app',
   components: {
-    HelloWorld
+    'article-select': ArticleSelect
+},
+
+data(){
+  return {
+    articles: [],
+  }
+},
+  mounted(){
+    fetch('https://content.guardianapis.com/search?q=brexit&format=json&api-key=test')
+    .then(res => res.json())
+    .then(resjson => this.articles = resjson.response.results);
   }
 }
 </script>
 
-<style>
+/* <style>
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -25,4 +40,4 @@ export default {
   color: #2c3e50;
   margin-top: 60px;
 }
-</style>
+</style> */
